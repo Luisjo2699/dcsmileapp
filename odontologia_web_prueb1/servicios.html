@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios - Clínica Dental</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-tooth"></i>
+                <h1>Clínica Dental</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="servicios.html" class="active">Servicios</a></li>
+                    <li><a href="contactos.html">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Servicios Section -->
+    <section class="services" id="servicios">
+        <div class="container">
+            <h2>Nuestros Servicios</h2>
+            <div class="services-grid">
+                <div class="service-card" onclick="showServicePrice('Limpieza Dental', 'Procedimiento de higiene bucal profesional que incluye eliminación de placa, sarro y pulido dental para mantener una sonrisa saludable.', '20$')">
+                    <i class="fas fa-broom"></i>
+                    <h3>Limpieza Dental</h3>
+                    <p>Procedimiento de higiene bucal profesional que incluye eliminación de placa, sarro y pulido dental</p>
+                </div>
+                <div class="service-card" onclick="showServicePrice('Limpieza', 'Limpieza profunda de encías y raíces dentales para tratar la enfermedad periodontal y mantener la salud gingival.', '25$')">
+                    <i class="fas fa-spray-can"></i>
+                    <h3>Limpieza</h3>
+                    <p>Limpieza profunda de encías y raíces dentales para tratar la enfermedad periodontal</p>
+                </div>
+                <div class="service-card" onclick="showServicePrice('Tratamiento de Conducto', 'Procedimiento endodóntico que elimina la pulpa dental infectada y sella el conducto para salvar el diente.', '80$')">
+                    <i class="fas fa-tools"></i>
+                    <h3>Tratamiento de Conducto</h3>
+                    <p>Procedimiento endodóntico que elimina la pulpa dental infectada y sella el conducto</p>
+                </div>
+                <div class="service-card" onclick="showServicePrice('Ortodoncia', 'Tratamiento ortodóntico completo para alinear dientes y corregir la mordida, incluyendo brackets y retenedores.', '150$')">
+                    <i class="fas fa-smile"></i>
+                    <h3>Ortodoncia</h3>
+                    <p>Tratamiento ortodóntico completo para alinear dientes y corregir la mordida</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Clínica Dental. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Modal de Precios de Servicios -->
+    <div id="servicePriceModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('servicePriceModal')">&times;</span>
+            <div class="service-price-content">
+                <h2 id="serviceTitle"></h2>
+                <p id="serviceDescription"></p>
+                <div class="price-display">
+                    <span class="price">Precio: <strong id="servicePrice"></strong></span>
+                </div>
+                <button class="btn btn-primary" onclick="closeModal('servicePriceModal')">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

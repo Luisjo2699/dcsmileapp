@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clínica Dental - Sistema de Gestión</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-tooth"></i>
+                <h1>Clínica Dental</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="index.html" class="active">Inicio</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="contactos.html">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Doctora Muelitas</h2>
+                <p>Cuidamos tu sonrisa con la más alta tecnología y profesionalismo</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="showLoginModal()">
+                        <i class="fas fa-user-md"></i> Acceso Profesional
+                    </button>
+                    <button class="btn btn-secondary" onclick="clearAllData()" style="background: #dc3545;">
+                        <i class="fas fa-trash"></i> Limpiar Datos
+                    </button>
+                    <button class="btn btn-secondary" onclick="showDebugInfo()" style="background: #17a2b8;">
+                        <i class="fas fa-bug"></i> Debug Info
+                    </button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="Imágenes de Prueba/paneo.gif" alt="Imagen principal de la clínica dental" id="main-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Clínica Dental. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Modal de Login -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Iniciar Sesión</h2>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="username">Usuario:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Detalles de Usuario -->
+    <div id="userDetailsModal" class="modal">
+        <div class="modal-content large">
+            <span class="close" onclick="closeModal('userDetailsModal')">&times;</span>
+            <h2>Detalles del Usuario</h2>
+            <div id="userDetailsContent"></div>
+        </div>
+    </div>
+
+    <!-- Modal de Panel Principal -->
+    <div id="mainPanelModal" class="modal">
+        <div class="modal-content large">
+            <span class="close" onclick="closeModal('mainPanelModal')">&times;</span>
+            <h2>Panel Principal - Dr. <span id="doctorName"></span></h2>
+            <div class="main-options">
+                <button class="btn btn-primary" onclick="showPatientInfo()">
+                    <i class="fas fa-user-injured"></i> Información Px (Paciente)
+                </button>
+                <button class="btn btn-secondary" onclick="showAddPatient()">
+                    <i class="fas fa-user-plus"></i> Agregar Px (Paciente)
+                </button>
+                <button class="btn btn-success" onclick="showChangePasswordForm()">
+                    <i class="fas fa-key"></i> Cambiar Contraseña
+                </button>
+            </div>
+
+            <!-- Panel de Información de Paciente -->
+            <div id="patientInfoPanel" class="hidden">
+                <h3>Información del Paciente</h3>
+                <div class="form-group">
+                    <label for="patientSearch">Buscar Paciente:</label>
+                    <input type="text" id="patientSearch" placeholder="Nombre o ID del paciente">
+                    <button onclick="searchPatient()" class="btn btn-primary">Buscar</button>
+                </div>
+                <div id="patientResults"></div>
+            </div>
+
+            <!-- Panel para Agregar Paciente -->
+            <div id="addPatientPanel" class="hidden">
+                <h3>Agregar Nuevo Paciente</h3>
+                <form onsubmit="handleAddPatient(event)">
+                    <div class="form-group">
+                        <label for="patientName">Nombre Completo:</label>
+                        <input type="text" id="patientName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientAge">Edad:</label>
+                        <input type="number" id="patientAge" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientCedula">Cédula:</label>
+                        <input type="text" id="patientCedula" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientBirthDate">Fecha de Nacimiento:</label>
+                        <input type="date" id="patientBirthDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientLocation">Ubicación:</label>
+                        <input type="text" id="patientLocation" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientPhone">Teléfono:</label>
+                        <input type="tel" id="patientPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientEmail">Email:</label>
+                        <input type="email" id="patientEmail" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Agregar Paciente</button>
+                </form>
+            </div>
+
+            <!-- Panel de Historia -->
+            <div id="historyPanel" class="hidden">
+                <h3>Historia del Paciente: <span id="currentPatientName"></span></h3>
+                <div id="affectedTeethSection" class="affected-teeth-section">
+                    <h4>Dientes afectados</h4>
+                    <ul id="affectedTeethList"></ul>
+                </div>
+                <div class="history-options">
+                    <button class="btn btn-primary" onclick="showClinicalHistory()">
+                        <i class="fas fa-notes-medical"></i> Historia Clínica
+                    </button>
+                    <button class="btn btn-secondary" onclick="showDentalHistory()">
+                        <i class="fas fa-tooth"></i> Historia Odontológica
+                    </button>
+                    <button class="btn btn-success" onclick="showAddHistory()">
+                        <i class="fas fa-plus"></i> Agregar Historia
+                    </button>
+                    <button class="btn btn-primary" onclick="showDentalRecord()">
+                        <i class="fas fa-tooth"></i> Registro Dental
+                    </button>
+                </div>
+
+                <!-- Contenido de Historia Clínica -->
+                <div id="clinicalHistoryContent" class="hidden">
+                    <h4>Historia Clínica</h4>
+                    <div id="clinicalHistoryList"></div>
+                </div>
+
+                <!-- Contenido de Historia Odontológica -->
+                <div id="dentalHistoryContent" class="hidden">
+                    <h4>Historia Odontológica</h4>
+                    <div id="dentalHistoryList"></div>
+                </div>
+
+                <!-- Panel para Agregar Historia -->
+                <div id="addHistoryPanel" class="hidden">
+                    <h4>Agregar Historia</h4>
+                    <div class="history-type-options">
+                        <button class="btn btn-primary" onclick="showAddClinicalHistory()">
+                            <i class="fas fa-notes-medical"></i> Agregar Historia Clínica
+                        </button>
+                        <button class="btn btn-secondary" onclick="showAddDentalHistory()">
+                            <i class="fas fa-tooth"></i> Agregar Historia Odontológica
+                        </button>
+                    </div>
+
+                    <!-- Formulario Historia Clínica -->
+                    <div id="addClinicalHistoryForm" class="hidden">
+                        <h5>Nueva Entrada de Historia Clínica</h5>
+                        <form onsubmit="handleAddClinicalHistory(event)">
+                            <div class="form-group">
+                                <label for="clinicalDate">Fecha:</label>
+                                <input type="date" id="clinicalDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="clinicalSymptoms">Síntomas:</label>
+                                <textarea id="clinicalSymptoms" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="clinicalDiagnosis">Diagnóstico:</label>
+                                <textarea id="clinicalDiagnosis" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="clinicalTreatment">Tratamiento:</label>
+                                <textarea id="clinicalTreatment" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Guardar Historia Clínica</button>
+                        </form>
+                    </div>
+
+                    <!-- Formulario Historia Odontológica -->
+                    <div id="addDentalHistoryForm" class="hidden">
+                        <h5>Nueva Entrada de Historia Odontológica</h5>
+                        <form onsubmit="handleAddDentalHistory(event)">
+                            <div class="form-group">
+                                <label for="dentalDate">Fecha:</label>
+                                <input type="date" id="dentalDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="dentalProcedure">Procedimiento:</label>
+                                <textarea id="dentalProcedure" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="dentalTeeth">Dientes Involucrados:</label>
+                                <input type="text" id="dentalTeeth" placeholder="Ej: 1,2,3" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="dentalNotes">Notas:</label>
+                                <textarea id="dentalNotes" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Guardar Historia Odontológica</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Precios de Servicios -->
+    <div id="servicePriceModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('servicePriceModal')">&times;</span>
+            <div class="service-price-content">
+                <h2 id="serviceTitle"></h2>
+                <p id="serviceDescription"></p>
+                <div class="price-display">
+                    <span class="price">Precio: <strong id="servicePrice"></strong></span>
+                </div>
+                <button class="btn btn-primary" onclick="closeModal('servicePriceModal')">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
